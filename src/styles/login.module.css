@@ -1,0 +1,57 @@
+.container{
+  max-width: min(60% , 498px);
+  min-width: fit-content;
+  margin: 0 auto;
+}
+
+.heading{
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form{
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  padding: 20px;
+  margin: 10px;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #333;
+  display: flex;
+  flex-direction: column;
+}
+
+.form input{
+  margin-bottom: 1rem;
+  padding: 10px;
+}
+
+.temp{
+  color: #9f9f9f;
+}
+
+.form input[type="submit"]{
+  background-color: #4febcb;
+  padding: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.temp span{
+  /* pill box css */
+  padding: 0.25rem 0.5rem;
+  border-radius: 20px;
+  background-color: #eb904f;
+  color: #333;
+  font-weight: bold;
+  margin-right: 1rem;
+
+}
