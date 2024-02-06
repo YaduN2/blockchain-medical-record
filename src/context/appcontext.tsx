@@ -5,7 +5,7 @@ import {createContext , useState , ReactNode} from 'react';
 export const appContext = createContext<[number, React.Dispatch<React.SetStateAction<number>>] | null>(null);
 
 function AppContextProvider({children}: {children: ReactNode}) {
-  const [isLogged , setIsLogged] = useState(0);
+  const [isLogged , setIsLogged] = useState(2);
 
   //0 ->  not logged in
   //1 ->  logged in as patient

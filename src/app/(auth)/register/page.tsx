@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import Patient from "../patient/page";
+import Patient from "./patient/page";
 
 const Register = () => {
   return (

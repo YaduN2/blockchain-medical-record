@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 /* Navbar.module.css */
 .nav {
   display: flex;
@@ -15,6 +17,7 @@
 
 .logo a {
   text-decoration: none;
+  font-family: 'Roboto', sans-serif;
   color: white;
 }
 
@@ -25,9 +28,54 @@
 
 .navLinks a {
   text-decoration: none;
+  font-family: 'Roboto', sans-serif;
   color: white;
 }
 
 .navLinks a:hover {
   color: rgb(173, 230, 221);
+}
+
+.selected {
+  /* make the selected field more highlighted pill box  */
+  text-decoration: underline;
+}
+
+/* html dialog element */
+.content{
+  position: absolute;
+  right : 0;
+  top:2rem;
+  cursor: pointer;
+  min-width: 100px;
+  display: none;
+}
+
+ 
+.content a{
+  color: white;
+}
+
+/* .content ul{
+
+} */
+
+.content li{
+  list-style : none;
+  background-color: rgb(44, 45, 45);
+  padding : 0.5rem 1rem;
+  color : white;
+  text-align : center;
+  cursor : pointer;
+  display : block ;
+  text-decoration: none;
+}
+
+.btn {
+  outline : none;
+  border : none;
+  text-decoration : node;
+  color : white;
+  background-color: rgb(44, 45, 45);
+
 }
