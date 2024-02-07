@@ -1,12 +1,13 @@
 "use client";
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useState} from 'react';
 import {appContext} from '@/context/appcontext';
 import {useContext} from 'react';
 import { usePathname } from 'next/navigation';
 import styles from "@/styles/login.module.css";
 // import {useRouter} from 'next/router';
+
 
 
  const login = () => {
@@ -16,6 +17,7 @@ import styles from "@/styles/login.module.css";
     passwd: "",
     role: "",
   });
+
 
   const [isLogged , setIsLogged] = useContext(appContext) ?? [null, () => {}];
   const path = usePathname();

@@ -4,6 +4,8 @@ import {createContext , useState , ReactNode} from 'react';
 
 export const appContext = createContext<[number, React.Dispatch<React.SetStateAction<number>>] | null>(null);
 
+
+
 function AppContextProvider({children}: {children: ReactNode}) {
   const [isLogged , setIsLogged] = useState(2);
 

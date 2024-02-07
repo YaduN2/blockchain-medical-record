@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/NavBar"
 import AppContextProvider from "@/context/appcontext"
-
+import { ClerkProvider } from '@clerk/nextjs'
 export default function RootLayout({
   children,
 }: {
@@ -14,10 +14,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{margin:"0" ,padding:"0"}}>
-        <AppContextProvider>
-          <Navbar />
-          {children}
-        </AppContextProvider>
+        <ClerkProvider>
+          <AppContextProvider>
+            <Navbar />
+            {children}
+          </AppContextProvider>
+        </ClerkProvider>
       </body>
     </html>
   )

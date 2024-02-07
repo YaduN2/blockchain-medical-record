@@ -9,6 +9,8 @@ import { usePathname } from "next/navigation";
 import { RxAvatar } from "react-icons/rx";
 import {useRef, useState } from 'react';
 
+
+
 const Navbar = () => {
 
   const [isLogged , setIsLogged] = useContext(appContext) ?? [0, () => {}];
@@ -45,13 +47,14 @@ const Navbar = () => {
   }
 
   return (
+    <div className={styles.container}>
     <nav className={styles.nav}>
       <div className={styles.logo}>
         <Link href="/">BlockRecords</Link>
       </div>
       <div className={styles.navLinks}>
         {!!isLogged && <Link href="/appointments">Appointments</Link>}
-        <Link href="/contact">contact</Link>
+        <Link href="/contact">Contact</Link>
         {
           // logic missing ---------------- logout button
           isLogged>0 ? (
@@ -75,6 +78,7 @@ const Navbar = () => {
         }
       </div>
     </nav>
+    </div>
   );
 };
 
