@@ -53,7 +53,6 @@ const Navbar = () => {
         <Link href="/">BlockRecords</Link>
       </div>
       <div className={styles.navLinks}>
-        {!!isLogged && <Link href="/appointments">Appointments</Link>}
         <Link href="/contact">Contact</Link>
         {
           // logic missing ---------------- logout button

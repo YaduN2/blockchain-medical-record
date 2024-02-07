@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.container{
+  font-family: 'Roboto', sans-serif;
+  display: block;
+  text-align: center;
+  width: 100%;
+  height:100%;
+  margin: 0 auto; 
+  box-sizing: border-box;
+}
+
+.notification_bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem auto;
+  background-color: #dbdbdb;
+  width: 510px;
+  min-height: max(512px , 50vh);
+  border-radius: 0.5rem;
+  max-height: 100%;
+ 
+}
+
+.notification_bar .header{
+  text-align: center;
+  width: 99%;
+  margin-inline: auto;
+  margin-bottom: 1rem;
+  margin-top:0.15rem;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px;
+  border-radius: 0.2rem;
+}
+
+.notification_content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100%- max(2rem , 22px));
+  margin: 0 auto;
+  overflow: scroll
+}
+
+.notification_item_list{
+  list-style: none;
+}
+
+.notification_item{
+  margin-bottom: 5px;
+  padding: 1rem;
+  margin-inline: auto;
+  width: 90%;
+  background-color: #fff;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
+}
+
+.notification_item:nth-child(3n+1){
+  border-bottom: 3px solid #0982f4;
+}
+.notification_item:nth-child(3n+3){
+  border-bottom: 3px solid #f40909;
+}
+.notification_item:nth-child(3n+2){
+  border-bottom: 3px solid #09f438;
+}
+
+.notification_item_content{
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+}
+
+.notication_item_text{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.notification_item_text .heading{
+  text-align: left !important;
+  font-size: 1.0rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.notification_item_text .description{
+  font-size: 0.85rem;
+  color:#4f4f4f;
+  width:70%;
+  text-wrap: break-word;
+  text-align: left !important;
+}
+
+ 
+/* stylise the scoll bar within */
+
+/* Stylize the scrollbar */
+.notification_content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.notification_content::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+.notification_content::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+.notification_content::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+ 
+.notification_item_avater{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.notification_item_avater img{
+  width: 50px;
+  height: 50px;
+  object-fit: fill;
+  object-position: center center;
+  border-radius: 50%;
+}
+
+
+

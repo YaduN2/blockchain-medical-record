@@ -4,7 +4,8 @@ const nextConfig = {
     remotePatterns: [
         {
             protocol: 'https',
-            hostname: '**.postimg.cc',
+            hostname: 'www.simsglobe.com',
+            pathname: '*'
         },
     ],
 },

@@ -5,8 +5,6 @@ import pic from "../../public/001234.png"
 
 function HomeFallback() {
   return (
-
-    //make a fallback page for the home page with good UI showing some importance of securing medical records
     <div className={styles.container}>
       <div className={styles.landing_page}>
         <div className={styles.text_section}>
@@ -17,7 +15,7 @@ function HomeFallback() {
             your medical records.
           </p>
           <button> Signin </button>
-          <button> Login </button>
+          <button > Login </button>
         </div>
         <div className={styles.img_section}>
           <Image src={pic} alt="medical records" />
