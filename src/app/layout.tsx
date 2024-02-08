@@ -1,7 +1,4 @@
-"use client";
-
 import Navbar from "@/components/NavBar"
-import AppContextProvider from "@/context/appcontext"
 import { ClerkProvider } from '@clerk/nextjs'
 export default function RootLayout({
   children,
@@ -12,15 +9,13 @@ export default function RootLayout({
 
   
   return (
-    <html lang="en">
-      <body style={{margin:"0" ,padding:"0"}}>
         <ClerkProvider>
-          <AppContextProvider>
-            <Navbar />
-            {children}
-          </AppContextProvider>
+          <html lang="en">
+            <body style={{margin:"0" ,padding:"0"}}>
+                  <Navbar />
+                  {children}
+            </body>
+          </html>
         </ClerkProvider>
-      </body>
-    </html>
   )
 }

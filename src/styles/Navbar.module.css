@@ -17,33 +17,39 @@
   padding: 1rem;
   width : min(1224px, 100vw);
   color: white;
-
+  position: relative;
 }
 
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
+  
 }
 
 .logo a {
   text-decoration: none;
   font-family: 'Roboto', sans-serif;
   color: white;
+
 }
 
 .navLinks {
   display: flex;
-  gap: 20px; /* Adjust the gap as needed */
+  gap: 1rem;  
+  align-items: center;
+
 }
 
 .navLinks a {
   text-decoration: none;
   font-family: 'Roboto', sans-serif;
   color: white;
+
 }
 
 .navLinks a:hover {
   color: rgb(173, 230, 221);
+
 }
 
 .selected {
@@ -79,6 +85,7 @@
   cursor : pointer;
   display : block ;
   text-decoration: none;
+
 }
 
 .btn {
@@ -87,5 +94,6 @@
   text-decoration : node;
   color : white;
   background-color: rgb(44, 45, 45);
+  
 
 }

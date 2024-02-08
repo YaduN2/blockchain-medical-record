@@ -16,7 +16,7 @@
   align-items: center;
   margin: 1rem auto;
   background-color: #dbdbdb;
-  width: 510px;
+  width: 100%;
   min-height: max(512px , 50vh);
   border-radius: 0.5rem;
   max-height: 100%;
@@ -26,6 +26,7 @@
 .notification_bar .header{
   text-align: center;
   width: 99%;
+  
   margin-inline: auto;
   margin-bottom: 1rem;
   margin-top:0.15rem;
@@ -39,10 +40,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 98%;
   height: calc(100%- max(2rem , 22px));
   margin: 0 auto;
-  overflow: scroll
+  overflow-y: scroll;
+  overflow-x: clip;
 }
 
 .notification_item_list{

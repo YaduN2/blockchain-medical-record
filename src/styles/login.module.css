@@ -1,86 +1,147 @@
-.container{
-  max-width: min(60% , 498px);
-  min-width: fit-content;
-  margin: 0 auto;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-.heading{
-  font-size: 2rem;
-  color: #333;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.form{
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  padding: 20px;
-  margin: 10px;
-  box-sizing: border-box;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #333;
+.container {
+  width: 100vw;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  margin: 0 auto;
+  text-transform: capitalize;
+  font-family: 'Roboto', sans-serif;
+}
+.container h1 {
+  font-size: 4rem;
 }
 
-.form input{
-  margin-bottom: 1rem;
+.form {
+  width: 70vw;
+  max-width: 900px;
+  padding: 2rem;
+  margin: 3rem auto;
+  background-color: rgb(242, 242, 242);
+  border-radius: 8px;
+ 
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  justify-content: center;
+  gap: 2rem;
+  grid-auto-flow: dense !important;
+  
+}
+
+.h1 {
+  text-align: center;
+  color: #333;
+}
+
+.form label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #333;
+
+}
+
+.form::placeholder {
+  color: #565656;
+}
+
+.form input {
+  width: 100%;
+  padding: 10px 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 18px;
+}
+
+.input:hover {
+  border: 1px solid #4febcb;
+}
+
+.input:focus {
+  border: 1px solid #4febcb;
+}
+
+
+.btn  {
+  background-color: #333;
   padding: 10px;
-}
-
-.temp{
-  color: #9f9f9f;
-}
-
-.form input[type="submit"]{
-  background-color: #4febcb;
-  padding: 1rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 1rem;
-  color: #333;
+  width: fit-content;
+  font-size: 20px;
+  color: #ffffff;
   font-weight: bold;
 }
-.form input[type="button"]{
-  background-color: #4febcb;
-  padding: 1rem;
+
+.btn:hover {
+  background-color: #cfcccc;
+  color: rgb(0, 0, 0);
+}
+
+.btn_submit{
+  margin: 2rem auto;
+  display: block;
+  padding: 1rem 2rem !important;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.5rem;
   cursor: pointer;
-  font-size: 1rem;
-  color: #333;
+  font-size: 20px;
+  color: #ffffff;
   font-weight: bold;
+  background-color: #333;
+  width:fit-content
 }
 
-.temp span{
-  /* pill box css */
-  padding: 0.25rem 0.5rem;
-  border-radius: 20px;
-  background-color: #eb904f;
-  color: #333;
-  font-weight: bold;
-  margin-right: 1rem;
-
-}
-
-/* make the select in drop down more bueatifull  */
 
 .form select{
-  margin-bottom: 1rem;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  background-color: #f4f4f4;
-  color: #333;
-  font-weight: bold;
+  width: 100%;
+  padding: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+
+}
+
+.form select option {
+  padding: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1.2rem;
+}
+
+.textarea {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 18px;
+  width: 100%;
+  resize: none;  
+}
+ 
+ 
+
+.text_container{
+  grid-column: 1 / -1 !important;
 }
 
 
-.role {
-  margin-bottom: 1rem;
-  padding: 10px;
-
-}
+.btn_metamask{
+    margin: 2rem auto;
+    display: block;
+    padding: 1rem 2rem !important;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #333;
+    width:fit-content
+} 
+ 

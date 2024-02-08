@@ -5,12 +5,14 @@
     align-items: center;
     text-align: center;
     width: 100vw;
+    position: relative;
 }
 
 .landing_page{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
+    margin:0 auto;
     align-items: center;
     color: #000;
     font-family: 'Roboto', sans-serif;
