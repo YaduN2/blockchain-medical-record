@@ -44,11 +44,39 @@ const Register = () => {
 
       
 
-      // send the email.
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
 
       // change the UI to our pending section.
       setPendingVerification(true)
+
+
+      //Temperorly store the user data to mongodb until ipfs and blockchain
+      const data = {
+        firstName,
+        lastName,
+        emailAddress: email,
+        password,
+        phoneNumber : phone,
+        height,
+        addresses,
+        weight,
+        hbd,
+        role,
+        allergy,
+        blood,
+        recent,
+        metamask
+      }
+
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+
+
     } catch (err) {
       console.error(err)
     }
