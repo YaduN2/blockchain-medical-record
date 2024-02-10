@@ -7,8 +7,8 @@ function Appointments({children: ReactNode}) {
   return (
     
     <div className="content">
+      
     </div>
-    
   )
 }
 

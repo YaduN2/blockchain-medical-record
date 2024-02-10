@@ -39,8 +39,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 98%;
+  align-items: stretch;
+  width: 99%;
   height: calc(100%- max(2rem , 22px));
   margin: 0 auto;
   overflow-y: scroll;
@@ -55,7 +55,7 @@
   margin-bottom: 5px;
   padding: 1rem;
   margin-inline: auto;
-  width: 90%;
+  width: 100%;
   background-color: #fff;
   border-radius: 0.3rem;
   box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
@@ -75,7 +75,7 @@
   
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   width: 100%;
 
 }
