@@ -4,27 +4,35 @@ import { useSignUp } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
 import styles from "@/styles/login.module.css"
 import { connect } from "http2"
+import Alert from "@mui/material/Alert"
 
+type Iuser = {
+  firstname: string
+  lastname: string
+  email: string
+  phone: string
+  height: string
+  address: string
+  weight: string
+  hbd: Date
+  role: string
+  allergy: string
+  blood: string
+  recent: string
+  metamask: string
+}
 
 const Register = () => {
   const { isLoaded, signUp, setActive } = useSignUp()
-  const [email, setEmail] = useState("")
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
   const [password, setPassword] = useState("")
   const [pendingVerification, setPendingVerification] = useState(false)
   const [code, setCode] = useState("")
   const router = useRouter()
   const [hbd, setHbd] = useState("")
-  const [role, setRole] = useState("")
-  const [allergy, setAllergy] = useState("")
-  const [blood, setBlood] = useState("")
-  const [weight, setWeight] = useState("")
-  const [height, setHeight] = useState("")
-  const [recent, setRecent] = useState("")
-  const [addresses, setAddresses] = useState("")
-  const [phone, setPhone] = useState("")
-  const [metamask, setMetamask] = useState("")
+  const [error, setError] = useState("")
+
+  const [user, setUser] = useState<Iuser | null>(null)
+
   // Form Submit
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -34,53 +42,68 @@ const Register = () => {
     }
 
     try {
-      await signUp.create({
-        firstName,
-        lastName,
-        emailAddress: email,
-        password,
-        phoneNumber : phone,
-      })
+      await signUp
+        .create({
+          firstName: user.firstname,
+          lastName: user.lastname,
+          emailAddress: user.email,
+          password,
+          web3Wallet: user.metamask,
+        })
+        .then((res) => {
+          signUp
+            .prepareWeb3WalletVerification({ strategy: "web3_wallet" })
+            .then((res) => {
+              console.log("Wallet Verification")
 
-      
+              // signUp.prepareEmailAddressVerification({ strategy: "email_code" })
+              // signUp.attemptEmailAddressVerification({ code: "code" })
+              // setPendingVerification(true)
+              //  signUp.prepareEmailAddressVerification({ strategy: "email_code" }).then((res) =>{
+              //     console.log("Email Verification")
+              //  }).catch((err) => {
+              //     console.log(err)
+              //   })
 
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
+              // setPendingVerification(true)
 
-      // change the UI to our pending section.
-      setPendingVerification(true)
+              //Temperorly store the user data to mongodb until ipfs and blockchain
+              const data = {
+                firstName: user.firstname,
+                lastName: user.lastname,
+                emailAddress: user.email,
+                phoneNumber: user.phone,
+                height: user.height,
+                address: user.address,
+                weight: user.weight,
+                hbd: user.hbd,
+                role: user.role,
+                allergy: user.allergy,
+                blood: user.blood,
+                recent: user.recent,
+                metamask: user.metamask,
+              }
 
+              fetch("/api/register", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+            })
+            .catch((err) => {
+              setError(err)
+              console.log("err", err)
+            })
 
-      //Temperorly store the user data to mongodb until ipfs and blockchain
-      const data = {
-        firstName,
-        lastName,
-        emailAddress: email,
-        password,
-        phoneNumber : phone,
-        height,
-        addresses,
-        weight,
-        hbd,
-        role,
-        allergy,
-        blood,
-        recent,
-        metamask
-      }
-
-      const res = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-
-
+          // change the UI to our pending section.
+        })
     } catch (err) {
-      console.error(err)
+      console.log(err)
     }
-  }
+
+}
 
   // Verify User Email Code
   const onPressVerify = async (e) => {
@@ -93,17 +116,26 @@ const Register = () => {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       })
+
+      console.log(completeSignUp)
+
       if (completeSignUp.status !== "complete") {
         /*  investigate the response, to see if there was an error
          or if the user needs to complete more steps.*/
         console.log(JSON.stringify(completeSignUp, null, 2))
+      } else {
+        alert(completeSignUp.status)
       }
       if (completeSignUp.status === "complete") {
         await setActive({ session: completeSignUp.createdSessionId })
         router.push("/")
+      } else {
+        alert(completeSignUp.status)
       }
     } catch (err) {
-      console.error(JSON.stringify(err, null, 2))
+      // the error.message container the reason why the verification failed.
+      console.log(err.message)
+      console.log("Help here")
     }
   }
 
@@ -114,7 +146,7 @@ const Register = () => {
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
         })
-        setMetamask(accounts[0])
+        setUser({ ...user, metamask: accounts[0] })
         console.log(accounts[0])
       } catch (err) {
         console.error(err)
@@ -137,7 +169,9 @@ const Register = () => {
                   type="text"
                   name="first_name"
                   id="first_name"
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) =>
+                    setUser({ ...user, firstname: e.target.value })
+                  }
                   className={styles.input}
                   required={true}
                 />
@@ -150,7 +184,9 @@ const Register = () => {
                   type="text"
                   name="last_name"
                   id="last_name"
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) =>
+                    setUser({ ...user, lastname: e.target.value })
+                  }
                   className={styles.input}
                   required={true}
                 />
@@ -163,7 +199,7 @@ const Register = () => {
                   type="email"
                   name="email"
                   id="email"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
                   className={styles.input}
                   placeholder="name@company.com"
                   required={true}
@@ -182,73 +218,73 @@ const Register = () => {
                   required={true}
                 />
               </div>
-          
-                <div className={styles.grpItem}>
-                  <label htmlFor="height" className={styles.input_label}>
-                    height
-                  </label>
-                  <input
-                    type="number"
-                    name="height"
-                    id="height"
-                    onChange={(e) => setHeight(e.target.value)}
-                    className={styles.input}
-                    required={true}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="addresses" className={styles.input_label}>
-                    Addresses
-                  </label>
-                  <input
-                    type="text"
-                    name="addresses"
-                    id="addresses"
-                    onChange={(e) => setAddresses(e.target.value)}
-                    className={styles.input}
-                    required={true}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="phone" className={styles.input_label}>
-                    Phone
-                  </label>
-                  <input
-                    type="text"
-                    name="phone"
-                    id="phone"
-                    onChange={(e) => setPhone(e.target.value)}
-                    className={styles.input}
-                    required={true}
-                  />
-                </div>
-                <div className={styles.grpItem}>
-                  <label htmlFor="weight" className={styles.input_label}>
-                    weight
-                  </label>
-                  <input
-                    type="number"
-                    name="weight"
-                    id="weight"
-                    onChange={(e) => setWeight(e.target.value)}
-                    className={styles.input}
-                    required={true}
-                  />
-                </div>
-                <div className={styles.grpItem}>
-                  <label htmlFor="hbd" className={styles.input_label}>
-                    Birth Date
-                  </label>
-                  <input
-                    type="date"
-                    name="hbd"
-                    id="hbd"
-                    onChange={(e) => setHbd(e.target.value)}
-                    className={styles.input}
-                    required={true}
-                  />
-                </div>
-   
+
+              <div className={styles.grpItem}>
+                <label htmlFor="height" className={styles.input_label}>
+                  height
+                </label>
+                <input
+                  type="number"
+                  name="height"
+                  id="height"
+                  onChange={(e) => setUser({ ...user, height: e.target.value })}
+                  className={styles.input}
+                  required={true}
+                />
+              </div>
+              <div>
+                <label htmlFor="address" className={styles.input_label}>
+                  Address
+                </label>
+                <input
+                  type="text"
+                  name="address"
+                  id="address"
+                  onChange={(e) =>
+                    setUser({ ...user, address: e.target.value })
+                  }
+                  className={styles.input}
+                  // required={true}
+                />
+              </div>
+              <div>
+                <label htmlFor="phone" className={styles.input_label}>
+                  Phone
+                </label>
+                <input
+                  type="text"
+                  name="phone"
+                  id="phone"
+                  onChange={(e) => setUser({ ...user, phone: e.target.value })}
+                  className={styles.input}
+                  required={true}
+                />
+              </div>
+              <div className={styles.grpItem}>
+                <label htmlFor="weight" className={styles.input_label}>
+                  weight
+                </label>
+                <input
+                  type="number"
+                  name="weight"
+                  id="weight"
+                  onChange={(e) => setUser({ ...user, weight: e.target.value })}
+                  className={styles.input}
+                  required={true}
+                />
+              </div>
+              <div className={styles.grpItem}>
+                <label htmlFor="hbd" className={styles.input_label}>
+                  Birth Date
+                </label>
+                <input
+                  type="date"
+                  name="hbd"
+                  id="hbd"
+                  onChange={(e) => setUser({ ...user, hbd: e.target.value })}
+                  className={styles.input}
+                />
+              </div>
 
               <div>
                 <label htmlFor="role" className={styles.input_label}>
@@ -257,7 +293,7 @@ const Register = () => {
                 <select
                   name="role"
                   id="role"
-                  onChange={(e) => setRole(e.target.value)}
+                  onChange={(e) => setUser({ ...user, role: e.target.value })}
                   className={styles.input}
                   required={true}
                 >
@@ -275,9 +311,11 @@ const Register = () => {
                   type="text"
                   name="allergy"
                   id="allergy"
-                  onChange={(e) => setAllergy(e.target.value)}
+                  onChange={(e) =>
+                    setUser({ ...user, allergy: e.target.value })
+                  }
                   className={styles.input}
-                  required={true}
+                  // required={true}
                 />
               </div>
 
@@ -289,9 +327,10 @@ const Register = () => {
                   type="text"
                   name="blood"
                   id="blood"
-                  onChange={(e) => setBlood(e.target.value)}
+                  onChange={(e) => setUser({ ...user, blood: e.target.value })}
                   className={styles.input}
                   required={true}
+                  placeholder="AB+"
                 />
               </div>
 
@@ -303,7 +342,7 @@ const Register = () => {
                   name="recent"
                   id="recent"
                   placeholder="recent health condition..."
-                  onChange={(e) => setRecent(e.target.value)}
+                  onChange={(e) => setUser({ ...user, recent: e.target.value })}
                   className={styles.textarea}
                   rows={4}
                 />
@@ -314,7 +353,7 @@ const Register = () => {
                 type="button"
                 className={styles.btn_metamask}
                 onClick={connectToMetamask}
-                >
+              >
                 Authenticate using Metamask
               </button>
             </div>
@@ -324,9 +363,9 @@ const Register = () => {
           </form>
         </>
       )}
-      {pendingVerification && (
+      {/* {pendingVerification && (
         <div>
-          <form className={styles.form}>
+          <form className={styles.form_email_validation}>
             <input
               value={code}
               className={styles.input}
@@ -342,7 +381,7 @@ const Register = () => {
             </button>
           </form>
         </div>
-      )}
+      )} */}
     </div>
   )
 }

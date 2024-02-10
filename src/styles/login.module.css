@@ -78,6 +78,7 @@
   font-size: 20px;
   color: #ffffff;
   font-weight: bold;
+  margin: 2rem auto;
 }
 
 .btn:hover {
@@ -145,3 +146,42 @@
     width:fit-content
 } 
  
+.form_email_validation{
+  width:40vw;
+  max-width: 500px;
+  padding: 2rem;
+  margin: 3rem auto;
+  background-color: rgb(242, 242, 242);
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  
+}
+
+.form_email_validation label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.form_email_validation input {
+  width: 100%;
+  padding: 10px 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 18px;
+}
+
+.form_email_validation .btn{
+  margin: 2rem auto;
+  display: block;
+  padding: 1rem 2rem !important;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 20px;
+  color: #ffffff;
+  font-weight: bold;
+  background-color: #333;
+  width:fit-content
+}
