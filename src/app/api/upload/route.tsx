@@ -1,63 +1,55 @@
-import formidable from "formidable";
-import fs from "fs";
-import FormData from "form-data";
-const pinataSDK = require("@pinata/sdk");
-// const pinataSDK = require("@pinata/sdk");
-const pinata = new pinataSDK({ pinataJWTKey: process.env.PINATA_JWT });
+import { NextRequest, NextResponse } from 'next/server'
+import formidable from 'formidable'
+import fs from 'fs'
+import { pipeline } from 'stream/promises'
+import { createReadStream, unlink } from 'fs';
+import pinataSDK from '@pinata/sdk'
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+const pinata = new pinataSDK({ pinataJWTKey: process.env.PINATA_JWT })
 
-const saveFile = async (file) => {
+async function saveFile(file) {
   try {
-    const stream = fs.createReadStream(file.filepath);
+    const stream = createReadStream(file.filepath)
     const options = {
       pinataMetadata: {
         name: file.originalFilename,
       },
-    };
-    const response = await pinata.pinFileToIPFS(stream, options);
-    fs.unlinkSync(file.filepath);
+    }
+    const response = await pinata.pinFileToIPFS(stream, options)
+    unlink(file.filepath, (err) => {
+      if (err) {
+        throw err;
+      }
+    });
 
-    return response;
+    return response
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}
 
-export default async function handler(req, res) {
-  if (req.method === "POST") {
-    try {
-      const form = new formidable.IncomingForm();
+
+export async function POST(req: NextRequest) {
+  try {
+    const form = new formidable.IncomingForm();
+    return new Promise((resolve, reject) => {
       form.parse(req, async function (err, fields, files) {
         if (err) {
-          console.log({ err });
-          return res.status(500).send("Upload Error");
+          console.error(err);
+          reject(NextResponse.error());
         }
-        const response = await saveFile(files.file);
-        const { IpfsHash } = response;
-
-        return res.send(IpfsHash);
+        try {
+          const response = await saveFile(files.file);
+          const { IpfsHash } = response;
+          resolve(NextResponse.json({ IpfsHash }));
+        } catch (e) {
+          console.error(e);
+          reject(NextResponse.error());
+        }
       });
-    } catch (e) {
-      console.log(e);
-      res.status(500).send("Server Error");
-    }
-  } else if (req.method === "GET") {
-    try {
-      const response = await pinata.pinList(
-        { pinataJWTKey: process.env.PINATA_JWT },
-        {
-          pageLimit: 1,
-        }
-      );
-      res.json(response.rows[0]);
-    } catch (e) {
-      console.log(e);
-      res.status(500).send("Server Error");
-    }
+    });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.error();
   }
 }
