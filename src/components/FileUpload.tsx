@@ -11,6 +11,10 @@ function FileUpload() {
   const [cid, setCid] = React.useState<string>("")
   const [dycryptionCid, setDecryptionCid] = React.useState<string>("")
 
+  function temp(){
+    return 1;
+  }
+
   async function formHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
@@ -42,15 +46,16 @@ function FileUpload() {
       nonce: "abcd",
     })
 
+
     const access = [
       {
         contractAddress: " ",
         standardContractType: " ",
         chain: "ethereum",
-        method: "eth_getBalance",
+        method: "temp",
         paramters: [":userAddress", "latest"],
         returnValueTest: {
-          comparator: ">=",
+          comparator: "===",
           value: "0",
         },
       },
@@ -73,8 +78,8 @@ function FileUpload() {
     const encryptedFile = new File([encryptedBlob], "encrypted.zip")
 
     formData.set("file", encryptedFile)
-
-    console.log("Encrypted file", encryptedFile)
+ 
+  
 
     // before sentind the data to remote server 
     
@@ -87,20 +92,25 @@ function FileUpload() {
     //   console.log(base64data)
     // }
 
-    let ipfsHash ;
+    let ipfsHash ="";
+  
 
     fetch("/api/upload", {
       method: "POST",
       body: formData,
     })
-      .then((res) => {
-        ipfsHash = res.text()
-        setCid(ipfsHash)
-        // TODO:
-            // sent this to blockchain
-        console.log("cid", cid)
-      })
-      .catch((err) => console.log(err))
+    .then((res) =>{
+      console.log("res", res);
+      return res.text();
+    }) // Add this line
+    .then((text) => {
+      ipfsHash = text;
+      setCid(ipfsHash);
+      console.log("cid", cid);
+    })
+    .catch((err) => console.log(err));
+
+
 }
 
 // -------------------------decryption of the file from cid----------------------
