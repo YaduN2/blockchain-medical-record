@@ -1,35 +1,148 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-.container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 100%;
-    margin: 0 auto;
-    align-items: center;
-    background-color: #f9f9f9;
-    border-radius: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px;
-    font-family: 'Roboto', sans-serif;
+.fileUpload{
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  max-width: 756px;
+  width: 100%;
+  display: block;
+  align-items: center;
 }
 
-.text_section {
-    margin-bottom: 1rem;
+.form{
+  display: flex !important;
+  flex-direction: row;
+  gap: 1rem;
 }
 
-.text {
-    padding: 0.5rem;
+.textarea{
+  margin-top: 3rem;
+  resize: none;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 #b9b9b9;
+  border: none;
+  outline: 1px solid #b9b9b9;
+  padding: 0.5rem;
 }
 
-.text_area {
-    resize: none;
-    /* Add your stylization here */
-    width: 100%;
-    height: 90px;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    font-size: 14px;
-    
+.title{
+  margin-bottom: 20px;
+  color: #2c2c2c;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1.3px;
+  line-height: 1.5;
+  text-align: center;
+  text-transform: uppercase;
+}
+.upload_section{
+  border-radius: 5px;
+  padding: 1rem;
+  max-width: 756px;
+  width: 100%;
+  display: block;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 }
 
+.upload__error {
+  display: none;
+  margin: 0 25px 30px;
+  color: #cb0000;
+  font-size: 14px;
+}
+
+.file_list{
+  margin:0 25px;
+
+}
+
+.dropzone{
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  width: 300px;
+  height: 150px;
+  margin: 0 25px;
+  transition: all .3s;
+  border: 2px dashed #b9b9b9;
+  border-radius: 15px;
+}
+
+.file_input{
+  display: none;
+}
+
+.dropzone_label{
+  width: 150px;
+  color: #2c2c2c;
+  font-size: 14px;
+  letter-spacing: 1.3px;
+  line-height: 1.5;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+
+.file-details__container {
+  display: grid;
+  grid-template-columns: 235px 20px;
+  padding-left: 15px;
+}
+
+.file-output__list-item {
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  align-items: end;
+  margin: 0 auto 25px;
+  list-style: none;
+}
+
+.file-output__list-item-image {
+  display: inline;
+  width: 30px;
+  height: 38px;
+  opacity: .4;
+}
+
+.file-output__list-item-name {
+  margin-bottom: 10px;
+  opacity: .4;
+  font-size: 13px;
+}
+
+.file-output__list-item--is-complete {
+  display: flex;
+  align-self: center;
+  width: 10px;
+  height: 10px;
+}
+
+.file-output__progress-bar {
+  width: 255px;
+}
+
+.file-output__progress-bar[value] {
+  appearance: none;
+  height: 2px;
+  column-span: 1 / 3;
+}
+
+.file-output__progress-bar[value]::-webkit-progress-bar {
+  background-color: rgba(grey, .2);
+}
+
+.progress-bar--in-progress[value]::-webkit-progress-value {
+  background-color: grey;
+}
+
+.progress-bar--is-finished[value]::-webkit-progress-value {
+  transition: all .25s;
+  background-color: gery;
+}
+
+.submitBtn{
+  margin-top: 1rem;
+}

@@ -31,25 +31,25 @@ function layout({
                 <li className={styles.li_item}>Appointments</li> */}
 
                 <li
-                  className={styles.li_item}
+                  className={styles.li_item }
                   onClick={() => setActive("Profile")}
                 >
                   Profile
                 </li>
                 <li
-                  className={styles.li_item}
+                  className={styles.li_item }
                   onClick={() => setActive("File Upload")}
                 >
                   File Upload
                 </li>
                 <li
-                  className={styles.li_item}
+                  className={styles.li_item }
                   onClick={() => setActive("Summary")}
                 >
                   Summary
                 </li>
                 <li
-                  className={styles.li_item}
+                  className={styles.li_item }
                   onClick={() => setActive("Appointments")}
                 >
                   Appointments
@@ -57,7 +57,7 @@ function layout({
               </ul>
             </div>
           </div>
-          <div className={styles.right_section}>
+            <div className={styles.right_section}>
             <div className={styles.childrens}>{children}</div>
 
             <div className={styles.contents_}>

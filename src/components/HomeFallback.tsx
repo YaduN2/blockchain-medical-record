@@ -14,8 +14,8 @@ function HomeFallback() {
             <br/>We provide a secure platform for you to store and access <br/>
             your medical records.
           </p>
-          <button> Signin </button>
-          <button > Login </button>
+          <button> Sign In </button>
+          <button > Log In </button>
         </div>
         <div className={styles.img_section}>
           <Image src={pic} alt="medical records" />

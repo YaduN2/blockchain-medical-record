@@ -116,6 +116,7 @@ const Register = () => {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       })
+      
 
       console.log(completeSignUp)
 
