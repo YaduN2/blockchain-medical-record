@@ -23,6 +23,7 @@ contract MedicalRecord {
     event PatientRegistered(address patient);
     event DoctorAccessGranted(address doctor, address patient);
     event DoctorAccessRevoked(address doctor, address patient);
+    event PatientIpfsUpdated(address patient, string ipfsUID);
 
     function registerDoctor(address doctor, string memory name, string memory specialization) external {
         require(!isDoctor[doctor], "Doctor already registered");
@@ -52,4 +53,9 @@ contract MedicalRecord {
         emit DoctorAccessRevoked(doctor, patient);
     }
 
+    function updatePatientIpfs(address patient, string memory ipfsUID) external {
+        require(isPatient[patient], "Patient not registered");
+        patients[patient].ipfsUID = ipfsUID;
+        emit PatientIpfsUpdated(patient, ipfsUID);
+    }
 }

@@ -1,7 +1,7 @@
 import { Contract, ethers } from "ethers";
 import contract_ABI from "./contract_abi.json";
 
-const contractAddress = "0x417Bf7C9dc415FEEb693B6FE313d1186C692600F";
+const contractAddress = "0x9bF88fAe8CF8BaB76041c1db6467E7b37b977dD7";
 const contractABI = contract_ABI;
 const provider = new ethers.providers.JsonRpcProvider();
 const contract = new Contract(contractAddress, contractABI, provider);
@@ -39,10 +39,15 @@ async function getPatientIPFS(patientAddress: string) {
   return ipfsUID;
 }
 
+async function updatePatientIPFS(patientAddress: string, ipfsUID: string) {
+  await contract.updatePatientIpfs(patientAddress, ipfsUID);
+}
+
 export {
   registerDoctor,
   registerPatient,
   giveAccessDoctor,
   revokeAccessDoctor,
   getPatientIPFS,
+  updatePatientIPFS,
 };

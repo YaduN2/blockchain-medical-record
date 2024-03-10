@@ -1,129 +1,133 @@
-"use client"
+"use client";
 
-import React from "react"
-import styles from "@/styles/fileUpload.module.css"
-import Image from "next/image"
-import * as LitJsSdk from "@lit-protocol/lit-node-client"
-import { auth } from "@clerk/nextjs"
+import React from "react";
+import styles from "@/styles/fileUpload.module.css";
+import Image from "next/image";
+import * as LitJsSdk from "@lit-protocol/lit-node-client";
+import { auth } from "@clerk/nextjs";
+import { useState } from "react";
+import { useStorageUpload } from "@thirdweb-dev/react";
+import { ThirdwebProvider } from "@thirdweb-dev/react";
 
 function FileUpload() {
-  const [file, setFile] = React.useState<File | null>(null)
-  const [cid, setCid] = React.useState<string>("")
-  const [dycryptionCid, setDecryptionCid] = React.useState<string>("")
+  const [file, setFile] = useState<any>();
+  const { mutateAsync: upload } = useStorageUpload();
+  const [cid, setCid] = React.useState<string>("");
+  const [dycryptionCid, setDecryptionCid] = React.useState<string>("");
 
-  function temp(){
-    return 1;
-  }
-
-  async function formHandler(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-
-    const formData = new FormData(e.currentTarget) 
-    const description = formData.get("description") as string
-    const file = formData.get("file") as File
-
-    if (description === "" || file === null) {
-      alert("Please fill in the description and upload a file")
-      return
-    }
-
-    //check file size
-    if (file.size > 1000000) {
-      alert("File size exceeds 1MB")
-      return
-    }
-
-    let finalUploadObj = Object.fromEntries(formData.entries())
-    finalUploadObj.date = new Date().toISOString()
-
-    const litNodeClient = new LitJsSdk.LitNodeClient({
-      litNetwork: "cayenne",
-    })
-
-    await litNodeClient.connect()
-    const authSig = await LitJsSdk.checkAndSignAuthMessage({
-      chain: "ethereum",
-      nonce: "abcd",
-    })
-
-
-    const access = [
-      {
-        contractAddress: " ",
-        standardContractType: " ",
-        chain: "ethereum",
-        method: "temp",
-        paramters: [":userAddress", "latest"],
-        returnValueTest: {
-          comparator: "===",
-          value: "0",
-        },
+  const uploadIPFS = async () => {
+    const uploadURL = await upload({
+      data: [file],
+      options: {
+        uploadWithGatewayUrl: true,
+        uploadWithoutDirectory: true,
       },
-    ]
+    });
+    console.log("uploadURL", uploadURL);
+  };
 
-    // TODO:
-    //in values we set to user address , then only user can decrypt the file
-    
+  // function temp() {
+  //   return 1;
+  // }
 
-    const encryptedZip = await LitJsSdk.encryptFileAndZipWithMetadata({
-      accessControlConditions: access,
-      authSig: authSig,
-      chain: "ethereum",
-      file: formData.get("file") as File,
-      readme: `${formData.get("description")} ${new Date().toISOString()}`,
-      litNodeClient: litNodeClient,
-    })
+  // async function formHandler(e: React.FormEvent<HTMLFormElement>) {
+  //   e.preventDefault();
 
-    const encryptedBlob = new Blob([encryptedZip], { type: "text/plain" })
-    const encryptedFile = new File([encryptedBlob], "encrypted.zip")
+  //   const formData = new FormData(e.currentTarget);
+  //   const description = formData.get("description") as string;
+  //   const file = formData.get("file") as File;
 
-    formData.set("file", encryptedFile)
- 
-  
+  //   if (description === "" || file === null) {
+  //     alert("Please fill in the description and upload a file");
+  //     return;
+  //   }
 
-    // before sentind the data to remote server 
-    
-    // save the file locally in the current directory
+  //   //check file size
+  //   if (file.size > 1000000) {
+  //     alert("File size exceeds 1MB");
+  //     return;
+  //   }
 
-    // const reader = new FileReader()
-    // reader.readAsDataURL(encryptedFile)
-    // reader.onloadend = function () {
-    //   const base64data = reader.result
-    //   console.log(base64data)
-    // }
+  //   let finalUploadObj = Object.fromEntries(formData.entries());
+  //   finalUploadObj.date = new Date().toISOString();
 
-    let ipfsHash ="";
-  
+  //   const litNodeClient = new LitJsSdk.LitNodeClient({
+  //     litNetwork: "cayenne",
+  //   });
 
-    fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    })
-    .then((res) =>{
-      console.log("res", res);
-      return res.text();
-    }) // Add this line
-    .then((text) => {
-      ipfsHash = text;
-      setCid(ipfsHash);
-      console.log("cid", cid);
-    })
-    .catch((err) => console.log(err));
+  //   await litNodeClient.connect();
+  //   const authSig = await LitJsSdk.checkAndSignAuthMessage({
+  //     chain: "ethereum",
+  //     nonce: "abcd",
+  //   });
 
+  //   const access = [
+  //     {
+  //       contractAddress: " ",
+  //       standardContractType: " ",
+  //       chain: "ethereum",
+  //       method: "temp",
+  //       paramters: [":userAddress", "latest"],
+  //       returnValueTest: {
+  //         comparator: "===",
+  //         value: "0",
+  //       },
+  //     },
+  //   ];
 
-}
+  //   // TODO:
+  //   //in values we set to user address , then only user can decrypt the file
 
-// -------------------------decryption of the file from cid----------------------
+  //   const encryptedZip = await LitJsSdk.encryptFileAndZipWithMetadata({
+  //     accessControlConditions: access,
+  //     authSig: authSig,
+  //     chain: "ethereum",
+  //     file: formData.get("file") as File,
+  //     readme: `${formData.get("description")} ${new Date().toISOString()}`,
+  //     litNodeClient: litNodeClient,
+  //   });
 
+  //   const encryptedBlob = new Blob([encryptedZip], { type: "text/plain" });
+  //   const encryptedFile = new File([encryptedBlob], "encrypted.zip");
 
+  //   formData.set("file", encryptedFile);
 
+  //   // before sentind the data to remote server
 
+  //   // save the file locally in the current directory
 
+  //   // const reader = new FileReader()
+  //   // reader.readAsDataURL(encryptedFile)
+  //   // reader.onloadend = function () {
+  //   //   const base64data = reader.result
+  //   //   console.log(base64data)
+  //   // }
+
+  //   let ipfsHash = "";
+
+  //   // const response_fetch = await fetch("/api/upload", {
+  //   //   method: "POST",
+  //   //   body: formData,
+  //   // })
+  //   //   .then((res) => {
+  //   //     console.log("res", res);
+  //   //     console.log(formData.get("file"));
+  //   //     return res.text();
+  //   //   }) // Add this line
+  //   //   .then((text) => {
+  //   //     ipfsHash = text;
+  //   //     setCid(ipfsHash);
+  //   //     console.log("cid", cid);
+  //   //   })
+  //   //   .catch((err) => console.log(err));
+  // }
+
+  // -------------------------decryption of the file from cid----------------------
 
   return (
     <div className={styles.fileUpload}>
       <h1>File Upload</h1>
-      <form onSubmit={formHandler} className={styles.form}>
+      <form onSubmit={uploadIPFS} className={styles.form}>
         <div className={styles.textArea}>
           <textarea
             name="description"
@@ -147,7 +151,7 @@ function FileUpload() {
         </div>
       </form>
     </div>
-  )
+  );
 }
 
-export default FileUpload
+export default FileUpload;
