@@ -6,25 +6,22 @@ import Image from "next/image";
 import * as LitJsSdk from "@lit-protocol/lit-node-client";
 import { auth } from "@clerk/nextjs";
 import { useState } from "react";
-import { useStorageUpload } from "@thirdweb-dev/react";
-import { ThirdwebProvider } from "@thirdweb-dev/react";
+import axios from "axios";
 
 function FileUpload() {
-  const [file, setFile] = useState<any>();
-  const { mutateAsync: upload } = useStorageUpload();
   const [cid, setCid] = React.useState<string>("");
   const [dycryptionCid, setDecryptionCid] = React.useState<string>("");
 
-  const uploadIPFS = async () => {
-    const uploadURL = await upload({
-      data: [file],
-      options: {
-        uploadWithGatewayUrl: true,
-        uploadWithoutDirectory: true,
-      },
-    });
-    console.log("uploadURL", uploadURL);
-  };
+  // const uploadIPFS = async () => {
+  //   const uploadURL = await upload({
+  //     data: [file],
+  //     options: {
+  //       uploadWithGatewayUrl: true,
+  //       uploadWithoutDirectory: true,
+  //     },
+  //   });
+  //   console.log("uploadURL", uploadURL);
+  // };
 
   // function temp() {
   //   return 1;
@@ -124,10 +121,40 @@ function FileUpload() {
 
   // -------------------------decryption of the file from cid----------------------
 
+  const [fileImg, setFileImg] = useState(null);
+
+  const sendFileToIPFS = async (e: any) => {
+    e.preventDefault();
+    if (fileImg) {
+      try {
+        const formData = new FormData();
+        formData.append("file", fileImg);
+
+        const resFile = await axios({
+          method: "post",
+          url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+          data: formData,
+          headers: {
+            pinata_api_key: "8047bdf01657dde467ce",
+            pinata_secret_api_key:
+              "ee9abb294e8419a32549eba4608058aa93cbe14c22fc6b532a1bb413e061c718",
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        const ImgHash = `ipfs://${resFile.data.IpfsHash}`;
+        console.log(ImgHash);
+      } catch (error) {
+        console.log("Error sending File to IPFS: ");
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <div className={styles.fileUpload}>
       <h1>File Upload</h1>
-      <form onSubmit={uploadIPFS} className={styles.form}>
+      <form onSubmit={sendFileToIPFS} className={styles.form}>
         <div className={styles.textArea}>
           <textarea
             name="description"
@@ -140,7 +167,6 @@ function FileUpload() {
         </div>
 
         <div className={styles.upload_section}>
-          {/* simple file input  */}
           <input
             type="file"
             name="file"
