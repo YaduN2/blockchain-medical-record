@@ -146,6 +146,7 @@ function FileUpload() {
             name="file"
             id="file"
             className={styles.fileInput}
+            onChange={(e) => setFileImg(e.target.files[0])}
           />
           <input type="submit" value="Submit" className={styles.submitBtn} />
         </div>
