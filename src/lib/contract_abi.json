@@ -62,7 +62,7 @@
       {
         "indexed": false,
         "internalType": "string",
-        "name": "ipfsUID",
+        "name": "ipfsCID",
         "type": "string"
       }
     ],
@@ -136,11 +136,6 @@
         "internalType": "address",
         "name": "doctor",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "patient",
-        "type": "address"
       }
     ],
     "name": "giveAccessDoctor",
@@ -157,6 +152,25 @@
       }
     ],
     "name": "isDoctor",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "doctor",
+        "type": "address"
+      }
+    ],
+    "name": "isDoctorRegistered",
     "outputs": [
       {
         "internalType": "bool",
@@ -190,6 +204,25 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "patient",
+        "type": "address"
+      }
+    ],
+    "name": "isPatientRegistered",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -208,7 +241,7 @@
       },
       {
         "internalType": "string",
-        "name": "ipfsUID",
+        "name": "ipfsCID",
         "type": "string"
       }
     ],
@@ -217,11 +250,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "doctor",
-        "type": "address"
-      },
       {
         "internalType": "string",
         "name": "name",
@@ -241,11 +269,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "patient",
-        "type": "address"
-      },
-      {
         "internalType": "string",
         "name": "name",
         "type": "string"
@@ -257,7 +280,7 @@
       },
       {
         "internalType": "string",
-        "name": "ipfsUID",
+        "name": "ipfsCID",
         "type": "string"
       }
     ],
@@ -272,11 +295,6 @@
         "internalType": "address",
         "name": "doctor",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "patient",
-        "type": "address"
       }
     ],
     "name": "revokeAccessDoctor",
@@ -287,13 +305,8 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "patient",
-        "type": "address"
-      },
-      {
         "internalType": "string",
-        "name": "ipfsUID",
+        "name": "ipfsCID",
         "type": "string"
       }
     ],
