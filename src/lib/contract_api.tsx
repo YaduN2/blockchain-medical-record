@@ -1,53 +1,52 @@
-import { Contract, ethers } from "ethers";
-import contract_ABI from "./contract_abi.json";
+import { ethers } from "ethers";
+import contract_abi from "./contract_abi.json";
 
-const contractAddress = "0x9bF88fAe8CF8BaB76041c1db6467E7b37b977dD7";
-const contractABI = contract_ABI;
+const contractAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+const abi = contract_abi;
 const provider = new ethers.providers.JsonRpcProvider();
-const contract = new Contract(contractAddress, contractABI, provider);
+const signer = provider.getSigner();
+const contract = new ethers.Contract(contractAddress, abi, signer);
 
-async function registerDoctor(
-  doctorAddress: string,
-  name: string,
-  specialization: string
-) {
-  await contract.registerDoctor(doctorAddress, name, specialization);
-}
+export const registerDoctor = async (name: string, specialization: string) => {
+  const tx = await contract.registerDoctor(name, specialization);
+  await tx.wait();
+  console.log("Doctor registered");
+};
 
-async function registerPatient(
-  patientAddress: string,
+export const registerPatient = async (
   name: string,
   dateOfBirth: number,
-  ipfsUID: string
-) {
-  await contract.registerPatient(patientAddress, name, dateOfBirth, ipfsUID);
-}
+  ipfsCID: string
+) => {
+  const tx = await contract.registerPatient(name, dateOfBirth, ipfsCID);
+  await tx.wait();
+  console.log("Patient registered");
+};
 
-async function giveAccessDoctor(doctorAddress: string, patientAddress: string) {
-  await contract.giveAccessDoctor(doctorAddress, patientAddress);
-}
+export const giveAccessDoctor = async (doctor: string) => {
+  const tx = await contract.giveAccessDoctor(doctor);
+  await tx.wait();
+  console.log("Doctor access granted");
+};
 
-async function revokeAccessDoctor(
-  doctorAddress: string,
-  patientAddress: string
-) {
-  await contract.revokeAccessDoctor(doctorAddress, patientAddress);
-}
+export const revokeAccessDoctor = async (doctor: string) => {
+  const tx = await contract.revokeAccessDoctor(doctor);
+  await tx.wait();
+  console.log("Doctor access revoked");
+};
 
-async function getPatientIPFS(patientAddress: string) {
-  const ipfsUID = await contract.getPatientIPFS(patientAddress);
-  return ipfsUID;
-}
+export const updatePatientIpfs = async (ipfsCID: string) => {
+  const tx = await contract.updatePatientIpfs(ipfsCID);
+  await tx.wait();
+  console.log("Patient IPFS updated");
+};
 
-async function updatePatientIPFS(patientAddress: string, ipfsUID: string) {
-  await contract.updatePatientIpfs(patientAddress, ipfsUID);
-}
+export const isDoctorRegistered = async (doctor: string) => {
+  const isRegistered = await contract.isDoctorRegistered(doctor);
+  console.log("Is doctor registered:", isRegistered);
+};
 
-export {
-  registerDoctor,
-  registerPatient,
-  giveAccessDoctor,
-  revokeAccessDoctor,
-  getPatientIPFS,
-  updatePatientIPFS,
+export const isPatientRegistered = async (patient: string) => {
+  const isRegistered = await contract.isPatientRegistered(patient);
+  console.log("Is patient registered:", isRegistered);
 };
