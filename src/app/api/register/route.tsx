@@ -10,9 +10,7 @@ export  async function GET(req: NextRequest){
   // const query = searchParams.get('query')
   return NextResponse.json({message: 'Hello World'});
 }
-
- const pinatajwt = process.env.PINATA_JWT;
-
+ 
 export default async function POST(req: NextRequest){
 
 

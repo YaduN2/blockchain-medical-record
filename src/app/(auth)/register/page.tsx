@@ -7,7 +7,7 @@ import { connect } from "http2"
 import Alert from "@mui/material/Alert"
 import { red } from "@mui/material/colors"
 
-type Iuser = {
+type Ipatient = {
   username: string
   firstname: string
   lastname: string
@@ -17,11 +17,19 @@ type Iuser = {
   address: string
   weight: string
   hbd: Date
-  role: string
   allergy: string
   blood: string
   recent: string
   metamask: string
+}
+
+type Idoctor = {
+  username: string
+  firstname: string
+  lastname: string
+  email: string
+  phone: string
+  specialization: string
 }
 
 const Register = () => {
@@ -66,8 +74,10 @@ const Register = () => {
 
           try{
 
-            // TODO: Add the user to the blockchain after encryption
-              // fetch("/api/register", {
+            // TODO: Add the user to the blockchain after encryption in route/register/route.jsx
+
+
+            // fetch("/api/register", {
               //   method: "POST",
               //   headers: {
                 //     "Content-Type": "application/json",
@@ -81,7 +91,7 @@ const Register = () => {
                 // router.push("/dashboard")
               // })
 
-          // change the UI to our pending section.
+ 
 
             
           
@@ -110,230 +120,281 @@ const Register = () => {
   return (
     <div className={styles.container}>
       { (
-        <>
           <form onSubmit={handleSubmit} className={styles.form}>
             <h1 className={styles.h1}>Register</h1>
             <div className={styles.grid}>
-              <div>
-                <label htmlFor="first_name" className={styles.input_label}>
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  name="first_name"
-                  id="first_name"
-                  value = {user?.firstname}
-                  onChange={(e) =>
-                    setUser({ ...user, firstname: e.target.value })
-                  }
-                  className={styles.input}
-                  required={true}
-                />
-              </div>
-              <div>
-                <label htmlFor="last_name" className={styles.input_label}>
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  name="last_name"
-                  id="last_name"
-                  value = {user?.lastname}
-                  onChange={(e) =>
-                    setUser({ ...user, lastname: e.target.value })
-                  }
-                  className={styles.input}
-                  required={true}
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className={styles.input_label}>
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  value = {user?.email}
-                  onChange={(e) => setUser({ ...user, email: e.target.value })}
-                  className={styles.input}
-                  placeholder="name@company.com"
-                  required={true}
-                />
-              </div>
-   
-              <div className={styles.grpItem}>
-                <label htmlFor="height" className={styles.input_label}>
-                  height
-                </label>
-                <input
-                  type="number"
-                  name="height"
-                  id="height"
-                  value = {user?.height}
-                  onChange={(e) => setUser({ ...user, height: e.target.value })}
-                  className={styles.input}
-                  required={true}
-                />
-              </div>
-              <div>
-                <label htmlFor="address" className={styles.input_label}>
-                  Address
-                </label>
-                <input
-                  type="text"
-                  name="address"
-                  id="address"
-                  value = {user?.address}
-                  onChange={(e) =>
-                    setUser({ ...user, address: e.target.value })
-                  }
-                  className={styles.input}
-                  // required={true}
-                />
-              </div>
-              <div>
-                <label htmlFor="phone" className={styles.input_label}>
-                  Phone
-                </label>
-                <input
-                  type="text"
-                  name="phone"
-                  id="phone"
-                  value = {user?.phone}
-                  onChange={(e) => setUser({ ...user, phone: e.target.value })}
-                  className={styles.input}
-                  required={true}
-                />
-              </div>
-              <div className={styles.grpItem}>
-                <label htmlFor="weight" className={styles.input_label}>
-                  weight
-                </label>
-                <input
-                  type="number"
-                  name="weight"
-                  id="weight"
-                  value = {user?.weight}
-                  onChange={(e) => setUser({ ...user, weight: e.target.value })}
-                  className={styles.input}
-                  required={true}
-                />
-              </div>
-              <div className={styles.grpItem}>
-                <label htmlFor="hbd" className={styles.input_label}>
-                  Birth Date
-                </label>
-                <input
-                  type="date"
-                  name="hbd"
-                  id="hbd"
-                  value = {user?.hbd}
-                  onChange={(e) => setUser({ ...user, hbd: e.target.value })}
-                  className={styles.input}
-                />
-              </div>
+
 
               <div>
-                <label htmlFor="role" className={styles.input_label}>
-                  Role
-                </label>
-                <select
-                  name="role"
-                  id="role"
-                  onChange={(e) => setUser({ ...user, role: e.target.value })}
-                  className={styles.input}
-                  value={user?.role}
-                  required={true}
-                >
-                  <option value="">Select Role</option>
-                  <option value="patient">Patient</option>
-                  <option value="doctor">Doctor</option>
-                </select>
+                  <label htmlFor="role" className={styles.input_label}>
+                    Role
+                  </label>
+                  <select
+                    name="role"
+                    id="role"
+                    onChange={(e) => setUser({ ...user, role: e.target.value })}
+                    className={styles.input}
+                    value={user?.role}
+                    required={true}
+                  >
+                    <option value="">Select Role</option>
+                    <option value="patient">Patient</option>
+                    <option value="doctor">Doctor</option>
+                  </select>
               </div>
 
-              <div>
-                <label htmlFor="allergy" className={styles.input_label}>
-                  Allergy
-                </label>
-                <input
-                  type="text"
-                  name="allergy"
-                  id="allergy"
-                  value = {user?.allergy}
-                  onChange={(e) =>
-                    setUser({ ...user, allergy: e.target.value })
-                  }
-                  className={styles.input}
-                  // required={true}
-                />
-              </div>
+              {user?.role === "doctor" && (
+                <>
+                 <div>
+                  <label htmlFor="first_name" className={styles.input_label}>
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    name="first_name"
+                    id="first_name"
+                    value={user?.firstname}
+                    onChange={(e) => setUser({ ...user, firstname: e.target.value })}
+                    className={styles.input}
+                    required={true} />
+                </div>
+                <div>
+                    <label htmlFor="last_name" className={styles.input_label}>
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      name="last_name"
+                      id="last_name"
+                      value={user?.lastname}
+                      onChange={(e) => setUser({ ...user, lastname: e.target.value })}
+                      className={styles.input}
+                      required={true} />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className={styles.input_label}>
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      value={user?.email}
+                      onChange={(e) => setUser({ ...user, email: e.target.value })}
+                      className={styles.input}
+                      placeholder="name@company.com"
+                      required={true} />
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className={styles.input_label}>
+                      Phone
+                    </label>
+                    <input
+                      type="text"
+                      name="phone"
+                      id="phone"
+                      value={user?.phone}
+                      onChange={(e) => setUser({ ...user, phone: e.target.value })}
+                      className={styles.input}
+                      required={true} />
+                  </div>
+                    <div>
+                      <label htmlFor="specialization" className={styles.input_label}>
+                        Specialization
+                      </label>
+                      <input
+                        type="text"
+                        name="specialization"
+                        id="specialization"
+                        value={user?.specialization}
+                        onChange={(e) => setUser({ ...user, specialization: e.target.value })}
+                        className={styles.input}
+                        required={true} />
+                    </div>
+                    </>
+              )
+              }
+  
+              {user?.role === "patient" && (
+                      <>
+                      <div>
+                        <label htmlFor="first_name" className={styles.input_label}>
+                          First Name
+                        </label>
+                        <input
+                          type="text"
+                          name="first_name"
+                          id="first_name"
+                          value={user?.firstname}
+                          onChange={(e) => setUser({ ...user, firstname: e.target.value })}
+                          className={styles.input}
+                          required={true} />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="last_name" className={styles.input_label}>
+                          Last Name
+                        </label>
+                        <input
+                          type="text"
+                          name="last_name"
+                          id="last_name"
+                          value={user?.lastname}
+                          onChange={(e) => setUser({ ...user, lastname: e.target.value })}
+                          className={styles.input}
+                          required={true} />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="email" className={styles.input_label}>
+                          Email Address
+                        </label>
+                        <input
+                          type="email"
+                          name="email"
+                          id="email"
+                          value={user?.email}
+                          onChange={(e) => setUser({ ...user, email: e.target.value })}
+                          className={styles.input}
+                          placeholder="name@company.com"
+                          required={true} />
+                      </div>
 
-              <div>
-                <label htmlFor="blood" className={styles.input_label}>
-                  Blood Group
-                </label>
-                <input
-                  type="text"
-                  name="blood"
-                  id="blood"
-                  onChange={(e) => setUser({ ...user, blood: e.target.value })}
-                  className={styles.input}
-                  required={true}
-                  placeholder="AB+"
-                  value={user?.blood}
-                />
-              </div>
+                      
 
-              <div className={styles.text_container}>
-                <label htmlFor="recent" className={styles.input_label}>
-                  Remarks
-                </label>
-                <textarea
-                  name="recent"
-                  id="recent"
-                  placeholder="recent health condition..."
-                  onChange={(e) => setUser({ ...user, recent: e.target.value })}
-                  className={styles.textarea}
-                  rows={4}
-                  value={user?.recent}
-                />
-              </div>
+                      <div className={styles.grpItem}>
+                        <label htmlFor="height" className={styles.input_label}>
+                          height
+                        </label>
+                        <input
+                          type="number"
+                          name="height"
+                          id="height"
+                          value={user?.height}
+                          onChange={(e) => setUser({ ...user, height: e.target.value })}
+                          className={styles.input}
+                          required={true} />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="address" className={styles.input_label}>
+                          Address
+                        </label>
+                        <input
+                          type="text"
+                          name="address"
+                          id="address"
+                          value={user?.address}
+                          onChange={(e) => setUser({ ...user, address: e.target.value })}
+                          className={styles.input} />
+                      </div>
+                   
+                      <div>
+                        <label htmlFor="phone" className={styles.input_label}>
+                          Phone
+                        </label>
+                        <input
+                          type="text"
+                          name="phone"
+                          id="phone"
+                          value={user?.phone}
+                          onChange={(e) => setUser({ ...user, phone: e.target.value })}
+                          className={styles.input}
+                          required={true} />
+                      </div>
+                      
+                      <div className={styles.grpItem}>
+                        <label htmlFor="weight" className={styles.input_label}>
+                          weight
+                        </label>
+                        <input
+                          type="number"
+                          name="weight"
+                          id="weight"
+                          value={user?.weight}
+                          onChange={(e) => setUser({ ...user, weight: e.target.value })}
+                          className={styles.input}
+                          required={true} />
+                      </div>
+                      
+                      <div className={styles.grpItem}>
+                        <label htmlFor="hbd" className={styles.input_label}>
+                          Birth Date
+                        </label>
+                        <input
+                          type="date"
+                          name="hbd"
+                          id="hbd"
+                          value={user?.hbd}
+                          onChange={(e) => setUser({ ...user, hbd: e.target.value })}
+                          className={styles.input} />
+                      </div>
+
+                      <div>
+                        <label htmlFor="allergy" className={styles.input_label}>
+                          Allergy
+                        </label>
+                        <input
+                          type="text"
+                          name="allergy"
+                          id="allergy"
+                          value={user?.allergy}
+                          onChange={(e) => setUser({ ...user, allergy: e.target.value })}
+                          className={styles.input} />
+                      </div>
+
+                      ,
+
+                      <div>
+                        <label htmlFor="blood" className={styles.input_label}>
+                          Blood Group
+                        </label>
+                        <input
+                          type="text"
+                          name="blood"
+                          id="blood"
+                          onChange={(e) => setUser({ ...user, blood: e.target.value })}
+                          className={styles.input}
+                          required={true}
+                          placeholder="AB+"
+                          value={user?.blood} />
+                      </div>
+
+                      
+
+                      <div className={styles.text_container}>
+                        <label htmlFor="recent" className={styles.input_label}>
+                          Remarks
+                        </label>
+                        <textarea
+                          name="recent"
+                          id="recent"
+                          placeholder="recent health condition..."
+                          onChange={(e) => setUser({ ...user, recent: e.target.value })}
+                          className={styles.textarea}
+                          rows={4}
+                          value={user?.recent} />
+                      </div>
+
+                      <div className={styles.btn_metamask}>
+                            <button
+                              type="button"
+                              className={styles.btn_metamask_inner}
+                              onClick={connectToMetamask}
+                            >
+                              Authenticate using Metamask
+                            </button>
+                      </div>
+                  </>
+
+        )}
             </div>
-            <div className="metamask.btn">
-              <button
-                type="button"
-                className={styles.btn_metamask}
-                onClick={connectToMetamask}
-              >
-                Authenticate using Metamask
-              </button>
-            </div>
+
             <button type="submit" className={styles.btn_submit}>
               Sign Up
             </button>
-          </form>
-        </>
+        </form>
       )}
-      {/* {pendingVerification && (
-        <div>
-          <form className={styles.form_email_validation}>
-            <input
-              value={code}
-              className={styles.input}
-              placeholder="Enter Verification Code..."
-              onChange={(e) => setCode(e.target.value)}
-            />
-            <button
-              type="submit"
-              onClick={onPressVerify}
-              className={styles.btn}
-            >
-              Verify Email
-            </button>
-          </form>
-        </div>
-      )} */}
     </div>
   )
 }

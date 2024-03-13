@@ -133,18 +133,23 @@
 
 
 .btn_metamask{
-    margin: 2rem auto;
     display: block;
-    padding: 1rem 2rem !important;
+    padding: 0.5rem 1rem !important;
     border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 0.5rem;
     cursor: pointer;
     font-size: 20px;
     color: #ffffff;
     font-weight: bold;
+   
     background-color: #333;
     width:fit-content
 } 
+
+
  
 .form_email_validation{
   width:40vw;
