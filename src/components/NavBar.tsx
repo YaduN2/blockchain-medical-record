@@ -23,7 +23,7 @@ const Navbar = () => {
       <div className={styles.navLinks}>
         <Link href="/" >Home</Link>
         {isSignedIn ?<><Link href="/dashboard">Dashboard</Link></>
-              :<> <Link href="/sign-in">Sign in</Link><Link href="/register">Sign up</Link></>
+              :<> <Link href="/sign-in">Sign in</Link><Link href="/sign-up">Sign up</Link></>
         }
         <UserButton afterSignOutUrl="/sign-in" />
       </div>

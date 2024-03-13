@@ -11,12 +11,13 @@ export  async function GET(req: NextRequest){
   return NextResponse.json({message: 'Hello World'});
 }
 
+ const pinatajwt = process.env.PINATA_JWT;
+
+export default async function POST(req: NextRequest){
 
 
-export async function POST(req: NextRequest){
-    const data = await req.json();
-    await createUser(data);
-    return NextResponse.json({message: 'Success'});
+  //post in blockchain
+  
 }
   
   
