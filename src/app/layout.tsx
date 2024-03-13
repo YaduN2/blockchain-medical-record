@@ -1,21 +1,21 @@
-import Navbar from "@/components/NavBar"
-import { ClerkProvider } from '@clerk/nextjs'
+import Navbar from "@/components/NavBar";
+import { ClerkProvider } from "@clerk/nextjs";
+import { ThirdwebProvider } from "@thirdweb-dev/react";
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-
-
-  
   return (
-        <ClerkProvider>
-          <html lang="en">
-            <body style={{margin:"0" ,padding:"0"}}>
-                  <Navbar />
-                  {children}
-            </body>
-          </html>
-        </ClerkProvider>
-  )
+    // <ThirdwebProvider>
+    <ClerkProvider>
+      <html lang="en">
+        <body style={{ margin: "0", padding: "0" }}>
+          <Navbar />
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
+    // </ThirdwebProvider>
+  );
 }

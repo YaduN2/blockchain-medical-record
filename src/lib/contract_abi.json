@@ -51,22 +51,23 @@
     "type": "event"
   },
   {
+    "anonymous": false,
     "inputs": [
       {
-        "internalType": "address",
-        "name": "doctor",
-        "type": "address"
-      },
-      {
+        "indexed": false,
         "internalType": "address",
         "name": "patient",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "ipfsCID",
+        "type": "string"
       }
     ],
-    "name": "giveAccessDoctor",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "name": "PatientIpfsUpdated",
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -80,70 +81,6 @@
     ],
     "name": "PatientRegistered",
     "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "doctor",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "specialization",
-        "type": "string"
-      }
-    ],
-    "name": "registerDoctor",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "patient",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "dateOfBirth",
-        "type": "string"
-      }
-    ],
-    "name": "registerPatient",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "doctor",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "patient",
-        "type": "address"
-      }
-    ],
-    "name": "revokeAccessDoctor",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "inputs": [
@@ -197,11 +134,43 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "doctor",
+        "type": "address"
+      }
+    ],
+    "name": "giveAccessDoctor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
     ],
     "name": "isDoctor",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "doctor",
+        "type": "address"
+      }
+    ],
+    "name": "isDoctorRegistered",
     "outputs": [
       {
         "internalType": "bool",
@@ -235,6 +204,25 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "patient",
+        "type": "address"
+      }
+    ],
+    "name": "isPatientRegistered",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -247,12 +235,84 @@
         "type": "string"
       },
       {
-        "internalType": "string",
+        "internalType": "uint256",
         "name": "dateOfBirth",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "ipfsCID",
         "type": "string"
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "specialization",
+        "type": "string"
+      }
+    ],
+    "name": "registerDoctor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "dateOfBirth",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "ipfsCID",
+        "type": "string"
+      }
+    ],
+    "name": "registerPatient",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "doctor",
+        "type": "address"
+      }
+    ],
+    "name": "revokeAccessDoctor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "ipfsCID",
+        "type": "string"
+      }
+    ],
+    "name": "updatePatientIpfs",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]
