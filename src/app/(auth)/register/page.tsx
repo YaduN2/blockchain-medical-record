@@ -6,6 +6,7 @@ import styles from "@/styles/login.module.css"
 import { connect } from "http2"
 import Alert from "@mui/material/Alert"
 import { red } from "@mui/material/colors"
+import {registerPatient , registerDoctor} from "@/lib/contract_api"
 
 type Ipatient = {
   username: string
@@ -40,6 +41,7 @@ const Register = () => {
   const router = useRouter()
   const [hbd, setHbd] = useState("")
   const [error, setError] = useState("")
+  const [ipfsHash , setIpfsHash] = useState("")
 
   const [user, setUser] = useState<Iuser | null>(null)
 
@@ -47,57 +49,82 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
  
-      if(user.metamask == null){
-        alert("Please authenticate using metamask")
-        return
+
+      let data  ;
+
+      if(user.role == "doctor"){
+        data = {
+          username: user.username,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          email: user.email,
+          phone: user.phone,
+          specialization: user.specialization,
+        }
+      }else{
+        
+          if(user.metamask == null){
+            alert("Please authenticate using metamask")
+            return
+          }
+            data = {
+              username: user.username,
+              firstname: user.firstname,
+              lastname: user.lastname,
+              email: user.email,
+              phone: user.phone,
+              height: user.height,
+              address: user.address,
+              weight: user.weight,
+              hbd: user.hbd,
+              allergy: user.allergy,
+              blood: user.blood,
+              recent: user.recent,
+              metamask: user.metamask
+            }
       }
 
       
-      
-          const data = {
-            username: user.username,
-            firstName: user.firstname,
-            lastName: user.lastname,
-            emailAddress: user.email,
-            phoneNumber: user.phone,
-            height: user.height,
-            address: user.address,
-            weight: user.weight,
-            hbd: user.hbd,
-            role: user.role,
-            allergy: user.allergy,
-            blood: user.blood,
-            recent: user.recent,
-            metamask: user.metamask,
-          }
 
 
-          try{
 
-            // TODO: Add the user to the blockchain after encryption in route/register/route.jsx
+      try{
 
-
-            // fetch("/api/register", {
-              //   method: "POST",
-              //   headers: {
-                //     "Content-Type": "application/json",
-              //   },
-              //   body: JSON.stringify(data),
-              // })
-              // .catch((err) => {
-              //   setError(err)
-              //   console.log("err", err)
-              // }).then(()=>{
-                // router.push("/dashboard")
-              // })
-
- 
-
-            
+        //1. storing to IPFS
+          // const token = process.env.PINATA_JWT
+          const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIyZjI0ZTFhZC0wZGJhLTQ0OTEtOTI4My02YzMwODAxMWIyZDEiLCJlbWFpbCI6InJpcm9tYTM5MzZAaGRybG9nLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImlkIjoiRlJBMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfSx7ImlkIjoiTllDMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiI5MWRiMzM5NzI0ZDIxNDBiYWEzMiIsInNjb3BlZEtleVNlY3JldCI6ImQ4NTFlY2RjZWU2ZmVjY2RhZjYwNWM2OGU0MTk4NzRhODRlZjM4OTRjYzQ4ZmJiOTlkNThhM2FiNDI3ZjQ3ZDkiLCJpYXQiOjE3MTAxODYxNTJ9.i_3z6yOLn89MOxdcP_HChOwbrDLLskXmvQHSdPXrzAE"
+          const options = {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({pinataMetadata: {name: 'User Data'}, pinataContent: data})
+          };
           
-          }catch(err){
-            console.log("Error", err)
-          }
+          fetch('https://api.pinata.cloud/pinning/pinJSONToIPFS', options)
+            .then(response => response.json())
+            .then(response => {
+              console.log(response);
+              setIpfsHash(response.IpfsHash)
+            }).then(()=>{
+                //2.Storing to blockchain
+                if(user?.role == "doctor"){
+                  registerDoctor(data.firstname, data.specialization)
+                }else{
+                  registerPatient(data.firstname, data.hbd, ipfsHash)
+                }
+
+            })
+            .catch(err => console.error(err));
+        
+
+      
+      }catch(err){
+        console.log("Error", err)
+      }
+
+
 
 }
  
