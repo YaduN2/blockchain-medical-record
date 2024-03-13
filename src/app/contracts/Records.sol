@@ -32,10 +32,10 @@ contract MedicalRecord {
         emit DoctorRegistered(msg.sender);
     }
 
-    function registerPatient(string memory name, uint256 dateOfBirth, string memory ipfsCID) external {
+    function registerPatient(string memory name, uint256 dateOfBirth, ) external {
         require(!isPatient[msg.sender], "Patient already registered");
         isPatient[msg.sender] = true;
-        patients[msg.sender] = Patient(name, dateOfBirth, ipfsCID);
+        patients[msg.sender] = Patient(name, dateOfBirth, ipfsCID,);
         emit PatientRegistered(msg.sender);
     }
 
