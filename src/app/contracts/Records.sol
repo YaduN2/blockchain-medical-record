@@ -25,19 +25,30 @@ contract MedicalRecord {
     event DoctorAccessRevoked(address doctor, address patient);
     event PatientIpfsUpdated(address patient, string ipfsCID);
 
-    function registerDoctor(string memory name, string memory specialization) external {
-        require(!isDoctor[msg.sender], "Doctor already registered");
-        isDoctor[msg.sender] = true;
-        doctors[msg.sender] = Doctor(name, specialization);
-        emit DoctorRegistered(msg.sender);
+   function registerDoctor(string memory name, string memory specialization) external {
+    require(!isDoctor[msg.sender], "Doctor already registered");
+    isDoctor[msg.sender] = true;
+    doctors[msg.sender] = Doctor(name, specialization);
+    emit DoctorRegistered(msg.sender);
+}
+
+function registerPatient(string memory name, uint256 dateOfBirth, string memory ipfsCID ) external {
+    require(!isPatient[msg.sender], "Patient already registered");
+    isPatient[msg.sender] = true;
+    patients[msg.sender] = Patient(name, dateOfBirth, ipfsCID);
+    emit PatientRegistered(msg.sender);
+}
+
+modifier onlyPatient() {
+    require(isPatient[msg.sender], "Only patients can perform this action");
+    _;
+}
+
+    function updatePatientIpfs(string memory ipfsCID) external onlyPatient {
+        patients[msg.sender].ipfsCID = ipfsCID;
+        emit PatientIpfsUpdated(msg.sender, ipfsCID);
     }
 
-    function registerPatient(string memory name, uint256 dateOfBirth, ) external {
-        require(!isPatient[msg.sender], "Patient already registered");
-        isPatient[msg.sender] = true;
-        patients[msg.sender] = Patient(name, dateOfBirth, ipfsCID,);
-        emit PatientRegistered(msg.sender);
-    }
 
     function giveAccessDoctor(address doctor) external {
         require(isDoctor[doctor], "Doctor not registered");
@@ -52,12 +63,7 @@ contract MedicalRecord {
         doctorAccess[doctor][msg.sender] = false;
         emit DoctorAccessRevoked(doctor, msg.sender);
     }
-
-    function updatePatientIpfs(string memory ipfsCID) external {
-        require(isPatient[msg.sender], "Patient not registered");
-        patients[msg.sender].ipfsCID = ipfsCID;
-        emit PatientIpfsUpdated(msg.sender, ipfsCID);
-    }
+ 
     
     function isDoctorRegistered(address doctor) external view returns (bool) {
         return isDoctor[doctor];

@@ -48,7 +48,11 @@ const Register = () => {
   // Form Submit
   const handleSubmit = async (e) => {
     e.preventDefault()
- 
+
+    if(user.metamask == null){
+      alert("Please authenticate using metamask")
+      return
+    }
 
       let data  ;
 
@@ -63,10 +67,7 @@ const Register = () => {
         }
       }else{
         
-          if(user.metamask == null){
-            alert("Please authenticate using metamask")
-            return
-          }
+          
             data = {
               username: user.username,
               firstname: user.firstname,
@@ -238,6 +239,16 @@ const Register = () => {
                         className={styles.input}
                         required={true} />
                     </div>
+                      <div className={styles.btn_metamask}>
+                            <button
+                              type="button"
+                              className={styles.btn_metamask_inner}
+                              className={styles.btn_metamask}
+                              onClick={connectToMetamask}
+                            >
+                              Authenticate using Metamask
+                            </button>
+                      </div>
                     </>
               )
               }
@@ -407,14 +418,17 @@ const Register = () => {
                             <button
                               type="button"
                               className={styles.btn_metamask_inner}
+                              className={styles.btn_metamask}
                               onClick={connectToMetamask}
                             >
                               Authenticate using Metamask
                             </button>
                       </div>
+
                   </>
 
         )}
+                
             </div>
 
             <button type="submit" className={styles.btn_submit}>

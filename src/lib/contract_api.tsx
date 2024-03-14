@@ -3,7 +3,7 @@ import contract_abi from "./contract_abi.json";
 
 const contractAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138";
 const abi = contract_abi;
-const provider = new ethers.providers.JsonRpcProvider("https://api.devnet.solana.com");
+const provider = new ethers.providers.JsonRpcProvider();
 // const provider = new ethers.providers.Web3Provider(window.ethereum)
 const signer = provider.getSigner();
 const contract = new ethers.Contract(contractAddress, abi, signer);
