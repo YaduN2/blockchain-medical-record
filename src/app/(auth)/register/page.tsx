@@ -47,8 +47,8 @@ const Register = () => {
 
   // Form Submit
   const handleSubmit = async (e) => {
+ 
     e.preventDefault()
-
     if(user.metamask == null){
       alert("Please authenticate using metamask")
       return
@@ -115,9 +115,11 @@ const Register = () => {
                 }else{
                   registerPatient(data.firstname, data.hbd, ipfsHash)
                 }
-
+                router.push("/dashboard ")
             })
             .catch(err => console.error(err));
+
+            
         
 
       

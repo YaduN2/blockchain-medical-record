@@ -7,6 +7,8 @@ import * as LitJsSdk from "@lit-protocol/lit-node-client";
 import { auth } from "@clerk/nextjs";
 import { useState } from "react";
 import axios from "axios";
+import { endianness } from "os";
+import {updatePatientIpfs} from "@/lib/contract_api"
 
 function FileUpload() {
   const [cid, setCid] = React.useState<string>("");
@@ -125,9 +127,12 @@ function FileUpload() {
 
   const sendFileToIPFS = async (e: any) => {
     e.preventDefault();
+    console.time("upload");
     if (fileImg) {
       try {
+
         const formData = new FormData();
+        
         formData.append("file", fileImg);
 
         const resFile = await axios({
@@ -140,10 +145,13 @@ function FileUpload() {
               "ee9abb294e8419a32549eba4608058aa93cbe14c22fc6b532a1bb413e061c718",
             "Content-Type": "multipart/form-data",
           },
-        });
+        })
 
+        const storeBlock = await updatePatientIpfs(resFile.data.IpfsHash);
         const ImgHash = `ipfs://${resFile.data.IpfsHash}`;
         console.log(ImgHash);
+
+
       } catch (error) {
         console.log("Error sending File to IPFS: ");
         console.log(error);

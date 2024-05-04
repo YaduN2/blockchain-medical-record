@@ -24,6 +24,7 @@ contract MedicalRecord {
     event DoctorAccessGranted(address doctor, address patient);
     event DoctorAccessRevoked(address doctor, address patient);
     event PatientIpfsUpdated(address patient, string ipfsCID);
+    
 
    function registerDoctor(string memory name, string memory specialization) external {
     require(!isDoctor[msg.sender], "Doctor already registered");
@@ -39,12 +40,8 @@ function registerPatient(string memory name, uint256 dateOfBirth, string memory 
     emit PatientRegistered(msg.sender);
 }
 
-modifier onlyPatient() {
-    require(isPatient[msg.sender], "Only patients can perform this action");
-    _;
-}
-
-    function updatePatientIpfs(string memory ipfsCID) external onlyPatient {
+ 
+    function updatePatientIpfs(string memory ipfsCID) external  {
         patients[msg.sender].ipfsCID = ipfsCID;
         emit PatientIpfsUpdated(msg.sender, ipfsCID);
     }
@@ -72,4 +69,10 @@ modifier onlyPatient() {
     function isPatientRegistered(address patient) external view returns (bool) {
         return isPatient[patient];
     }
+ 
+    function getIpfsCID( ) external view returns (string memory) {
+        require(isPatient[msg.sender], "Patient not registered");
+        return patients[msg.sender].ipfsCID;
+    }
+ 
 }

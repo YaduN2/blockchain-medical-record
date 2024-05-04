@@ -1,12 +1,12 @@
 import { ethers } from "ethers";
 import contract_abi from "./contract_abi.json";
 
-const contractAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 const abi = contract_abi;
 const provider = new ethers.providers.JsonRpcProvider();
 // const provider = new ethers.providers.Web3Provider(window.ethereum)
 const signer = provider.getSigner();
-const contract = new ethers.Contract(contractAddress, abi, signer);
+const contract = new ethers.Contract(contractAddress, abi,signer);
 
 export const registerDoctor = async (name: string, specialization: string) => {
   const tx = await contract.registerDoctor(name, specialization);
@@ -51,3 +51,11 @@ export const isPatientRegistered = async (patient: string) => {
   const isRegistered = await contract.isPatientRegistered(patient);
   console.log("Is patient registered:", isRegistered);
 };
+
+
+export const getIpfsCID = async () => {
+  const ipfsCID = await contract.getIpfsCID();
+  console.log("IPFS CID:", ipfsCID);
+  return ipfsCID;
+}
+ 

@@ -12,7 +12,6 @@ import { useUser } from '@clerk/clerk-react';
 const Navbar = () => {
   
   const {isSignedIn } = useUser();
-  console.log("userId: ", isSignedIn);
 
   return (
     <div className={styles.container}>

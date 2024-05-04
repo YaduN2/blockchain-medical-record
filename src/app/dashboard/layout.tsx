@@ -3,10 +3,12 @@ import React from "react"
 import styles from "@/styles/dashboard.module.css"
 import { useState } from "react"
 import { UserProfile } from "@clerk/nextjs"
+import { updatePatientIpfs } from "@/lib/contract_api"
 
 function layout({
   children,
   summary,
+  uploadedFiles,
   fileUpload,
   appointments,
 }: {
@@ -54,6 +56,12 @@ function layout({
                 >
                   Appointments
                 </li>
+                <li
+                  className={styles.li_item }
+                  onClick={() => setActive("uploadedFiles")}
+                >
+                  Files
+                </li>
               </ul>
             </div>
           </div>
@@ -71,6 +79,7 @@ function layout({
               {active === "File Upload" && fileUpload}
               {active === "Summary" && summary}
               {active === "Appointments" && appointments}
+              {active === "uploadedFiles" && uploadedFiles}
             </div>
           </div>
         </section>
