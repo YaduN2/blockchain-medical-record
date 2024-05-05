@@ -3,13 +3,12 @@ import Summary from '@/components/Summary'
 
 //parallel Routing
 
-function Appointments({children: ReactNode}) {
+function pages({children: ReactNode}) {
   return (
     
-    <div className="content">
-      
+    <div className="content ">
     </div>
   )
 }
 
-export default Appointments
+export default pages

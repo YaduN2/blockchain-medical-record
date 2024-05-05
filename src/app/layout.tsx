@@ -1,6 +1,7 @@
 import Navbar from "@/components/NavBar";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThirdwebProvider } from "@thirdweb-dev/react";
+import "./globals.css"
 export default function RootLayout({
   children,
 }: {
@@ -10,7 +11,7 @@ export default function RootLayout({
     // <ThirdwebProvider>
     <ClerkProvider>
       <html lang="en">
-        <body style={{ margin: "0", padding: "0" }}>
+        <body style={{ margin: "0", padding: "0" }} >
           <Navbar />
           {children}
         </body>

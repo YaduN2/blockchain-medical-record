@@ -86,7 +86,7 @@ const Register = () => {
       }
 
       
-
+      
 
 
       try{
@@ -124,7 +124,7 @@ const Register = () => {
 
       
       }catch(err){
-        console.log("Error", err)
+        console.error("Error", err)
       }
 
 
@@ -365,8 +365,11 @@ const Register = () => {
                           type="date"
                           name="hbd"
                           id="hbd"
-                          value={user?.hbd}
-                          onChange={(e) => setUser({ ...user, hbd: e.target.value })}
+                          value={user?.hbd ? new Date(user.hbd * 1000).toISOString().split('T')[0] : ''}                          onChange={(e) => {
+                            const date = new Date(e.target.value);
+                            const timestamp = Math.floor(date.getTime() / 1000);
+                            setUser({ ...user, hbd: timestamp });
+                          }}
                           className={styles.input} />
                       </div>
 

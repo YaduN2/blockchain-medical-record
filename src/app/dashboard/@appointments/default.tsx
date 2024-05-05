@@ -4,7 +4,6 @@ function Appointments() {
   return (
     
     <div className="content">
-      <Notification />
     </div>
     
   )
