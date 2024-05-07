@@ -88,18 +88,16 @@ function FileUpload() {
         //   },
         // ]
 
-
-         
         let patientAddress=walletAddr
         const accs = [
           {
-            contractAddress: "ipfs://QmP6V86oVGBZA6te81dzkDorMQuPannDmGuMDL2CVoNwGc",
+            contractAddress: "ipfs://QmVHoFLBnbnShkU1Abc41w6g3NGxMAi3fS5iZTGqXgxFLH",
             standardContractType: "LitAction",
             chain: "ethereum",
             method: "livin",
             parameters: [
               ":userAddress",
-              `${patientAddress}`,
+              `${patientAddress}`.trim(),
               `${process.env.NEXT_PUBLIC_GATEWAY_URL}`,
             ],
             returnValueTest: {

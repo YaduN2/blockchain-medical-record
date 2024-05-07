@@ -1,7 +1,9 @@
 "use client"
 import Link from "next/link"
 import React, { useState } from "react"
-import { toast } from "react-toastify"
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import * as LitJsSdk from "@lit-protocol/lit-node-client"
 
 const accessFiles = () => {
@@ -37,9 +39,11 @@ const accessFiles = () => {
       fetch(urlFileList, options)
         .then((response) => response.json())
         .then((response) => {
+          console.log(response)
           if (response.count == 0) {
             toast.error("No files found")
             setRecord([])
+            toast.error("No files found")
             return
           } else {
             return response.rows[0].ipfs_pin_hash
@@ -50,7 +54,7 @@ const accessFiles = () => {
           if (ipfsHash) {
             if (ipfsHash) {
               let ipfsUrl = `https://sapphire-abundant-dingo-915.mypinata.cloud/ipfs/${ipfsHash}`
-              fetch(ipfsUrl)
+              fetch(ipfsUrl)  
                 .then((res) => {
                   console.log(res)
                   return res.json()
@@ -74,6 +78,7 @@ const accessFiles = () => {
 
   function handleForm(e) {
     e.preventDefault()
+    connectToMetamask()
     fetchRecords()
   }
 
@@ -115,6 +120,7 @@ const accessFiles = () => {
     }
   }
 
+
   return (
     <div className="w-full">
       <div className="shadow-md rounded-md bg-white ring-1 ring-gray-200">
@@ -127,7 +133,7 @@ const accessFiles = () => {
             name="addr"
             className="w-full p-2 border border-gray-300 rounded-md"
             value={addr}
-            onChange={(e) => setAddr(e.target.value)}
+            onChange={(e) => setAddr(e.target.value.trim())}
           />
           <button
             type="submit"

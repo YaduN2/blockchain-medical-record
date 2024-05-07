@@ -66,6 +66,12 @@ function Appointments() {
       toast.error("Receiver already exists");
       return;
     }
+
+    // only owner can provide access
+    if(walletAddr !== records.data.accessList[0]){
+      toast.error("Only owner can provide access");
+      return;
+    }
   
     let newAccessList = [...records.data.accessList, reciever];
     let newRecords = {
@@ -116,7 +122,23 @@ function Appointments() {
       return;
     }
   
+    if(reciever== records.data.accessList[0]){
+      toast.error("Cannot revoke access for the owner");
+      return;
+    }
  
+    if (!records.data?.accessList.some((item) => item === reciever)) {
+      toast.error("Receiver does not exist");
+      return;
+    }
+
+    // only owner can revoke access
+
+    if(walletAddr !== records.data.accessList[0]){
+      toast.error("Only owner can revoke access");
+      return;
+    }
+
   
     let newAccessList = records.data.accessList.filter((item) => item !== reciever);
     let newRecords = {

@@ -86,6 +86,7 @@ const uploadedFiles = () => {
 
   useEffect(() => {
     fetchRecords()
+    connectToMetamask()
   }, [])
 
   return (

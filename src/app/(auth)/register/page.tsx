@@ -7,6 +7,11 @@ import { connect } from "http2"
 import Alert from "@mui/material/Alert"
 import { red } from "@mui/material/colors"
 import {registerPatient , registerDoctor} from "@/lib/contract_api"
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+
 
 type Ipatient = {
   username: string
@@ -140,9 +145,12 @@ const Register = () => {
           method: "eth_requestAccounts",
         })
         setUser({ ...user, metamask: accounts[0] })
-        console.log(accounts[0])
+        toast.success("Connected to Metamask successfully!"); // Show success toast
+
       } catch (err) {
         console.error(err)
+        toast.error("Failed to connect to Metamask."); // Show error toast
+
       }
     }
   }
@@ -241,16 +249,20 @@ const Register = () => {
                         className={styles.input}
                         required={true} />
                     </div>
-                      <div className={styles.btn_metamask}>
+       
+
+                      <div className="w-full col-span-2">
                             <button
                               type="button"
-                              className={styles.btn_metamask_inner}
-                              className={styles.btn_metamask}
+                              className="w-full bg-[#333333] font-semibold text-white p-4 rounded-md shadow"
                               onClick={connectToMetamask}
                             >
                               Authenticate using Metamask
                             </button>
                       </div>
+
+
+
                     </>
               )
               }
@@ -419,11 +431,10 @@ const Register = () => {
                           value={user?.recent} />
                       </div>
 
-                      <div className={styles.btn_metamask}>
+                      <div className="w-full col-span-2">
                             <button
                               type="button"
-                              className={styles.btn_metamask_inner}
-                              className={styles.btn_metamask}
+                              className="w-full bg-[#333333] font-semibold text-white p-4 rounded-md shadow"
                               onClick={connectToMetamask}
                             >
                               Authenticate using Metamask
