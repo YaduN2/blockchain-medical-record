@@ -10,6 +10,8 @@ import axios from "axios"
 import { endianness } from "os"
 import { updatePatientIpfs, getIpfsCID } from "@/lib/contract_api"
 import { set } from "mongoose"
+import "react-toastify/dist/ReactToastify.css"
+import { toast } from "react-toastify"
 
 
 
@@ -205,6 +207,8 @@ function FileUpload() {
                       console.log("updated record Table ", response)
                       const storeBlock = updatePatientIpfs(updatedHash)
                       console.log("storeBlock:", storeBlock)
+                    }).then((_)=>{
+                      toast.success("File Uploaded Successfully")
                     })
                     .catch((err) => console.error(err))
                 })

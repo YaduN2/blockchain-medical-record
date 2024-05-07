@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import styles from '@/styles/homeFallback.module.css'
 import pic from "../../public/001234.png"
+import Link from 'next/link'
 
 function HomeFallback() {
   return (
@@ -14,8 +15,8 @@ function HomeFallback() {
             <br/>We provide a secure platform for you to store and access <br/>
             your medical records.
           </p>
-          <button> Sign In </button>
-          <button > Log In </button>
+          <Link href="/sign-up" className="bg-[#333333] rounded-md px-4 py-2 m-1 text-white font-semibold"> Sign Up </Link>
+          <Link href="/sign-in" className="bg-[#333333] rounded-md px-4 py-2 m-1 text-white font-semibold"> Log In </Link>
         </div>
         <div className={styles.img_section}>
           <Image src={pic} alt="medical records" />

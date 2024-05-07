@@ -145,6 +145,7 @@ const Register = () => {
           method: "eth_requestAccounts",
         })
         setUser({ ...user, metamask: accounts[0] })
+        window.alert("Connected to Metamask successfully!")
         toast.success("Connected to Metamask successfully!"); // Show success toast
 
       } catch (err) {

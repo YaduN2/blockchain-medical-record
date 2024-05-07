@@ -190,7 +190,7 @@ function Appointments() {
           <label htmlFor="reciever"></label>
           <input
             onChange={(e) => {
-              setReciever(e.target.value)
+              setReciever(e.target.value.trim())
             }}
             value={reciever}
             type="text"
