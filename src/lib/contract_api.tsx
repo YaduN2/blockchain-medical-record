@@ -37,6 +37,10 @@ export const revokeAccessDoctor = async (doctor: string) => {
 };
 
 export const updatePatientIpfs = async (ipfsCID: string) => {
+  if(!ipfsCID) {
+    console.log(ipfsCID);
+    return
+  }
   const tx = await contract.updatePatientIpfs(ipfsCID);
   await tx.wait();
   console.log("Patient IPFS updated");
